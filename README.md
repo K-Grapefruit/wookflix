@@ -17,3 +17,4 @@ TheMovieDB Image가져오기
 
 React Query
 https://react-query.tanstack.com/overview
+dd
