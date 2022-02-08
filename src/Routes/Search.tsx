@@ -100,12 +100,36 @@ function Search() {
     background-color: rgba(0, 0, 0, 0.7);
   `;
 
+  const OverlayItem = styled.div`
+    position: absolute;
+    width: 40vw;
+    height: 80vh;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: #2f2f2f;
+  `;
   const overlayVariants = {
     start: {
       opacity: 0,
+      scale: 0,
     },
     visible: {
       opacity: 1,
+      scale: 1,
+      rotateZ: 360,
+      transition: {
+        duration: 1,
+      },
+    },
+    exit: {
+      opacity: 0,
+      scale: 0,
+      transition: {
+        duration: 1,
+      },
     },
   };
 
@@ -132,27 +156,19 @@ function Search() {
           ))}
         </ResultPage>
       )}
-      {bigMovieaMatch ? (
-        <AnimatePresence>
+      <AnimatePresence>
+        {bigMovieaMatch ? (
           <Overlay
             onClick={() => close(String(keyword))}
             variants={overlayVariants}
+            initial="start"
+            animate="visible"
+            exit="exit"
           >
-            <div
-              style={{
-                top: scrollY.get() + 100,
-                left: 0,
-                right: 0,
-
-                width: "40vw",
-                height: "80vh",
-                position: "absolute",
-                backgroundColor: "red",
-              }}
-            ></div>
+            <OverlayItem style={{ top: scrollY.get() + 100 }}></OverlayItem>
           </Overlay>
-        </AnimatePresence>
-      ) : null}
+        ) : null}
+      </AnimatePresence>
     </Wrapper>
   );
 }
