@@ -36,6 +36,7 @@ const Title = styled.h2`
 const OverView = styled.p`
   font-size: 36px;
   width: 50%;
+  overflow: hidden;
 `;
 
 const Slider = styled.div`

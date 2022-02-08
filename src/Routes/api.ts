@@ -7,6 +7,8 @@ interface IMovie {
   poster_path: string;
   title: string;
   overview: string;
+  release_date: string;
+  popularity: number;
 }
 
 export interface IGetMoviesResult {
@@ -14,6 +16,13 @@ export interface IGetMoviesResult {
     maximum: string;
     minimum: string;
   };
+  page: number;
+  results: IMovie[];
+  total_pages: number;
+  total_results: number;
+}
+
+export interface IGetMoviesSearch {
   page: number;
   results: IMovie[];
   total_pages: number;
