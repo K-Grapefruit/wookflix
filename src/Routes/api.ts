@@ -25,3 +25,11 @@ export function getMovies() {
     (response) => response.json()
   );
 }
+
+//검색결과 데이터
+
+export function searchMovie(data: string) {
+  return fetch(
+    `${BASE_PATH}/search/movie?api_key=${API_KEY}&language=en-US&query=${data}&page=1&include_adult=false&region=kr`
+  ).then((response) => response.json());
+}

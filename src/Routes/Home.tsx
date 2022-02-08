@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useViewportScroll } from "framer-motion";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useHistory, useRouteMatch } from "react-router-dom";
@@ -117,21 +117,71 @@ const infoVariants = {
   },
 };
 
+const BigCover = styled.div`
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+  height: 400px;
+`;
+
+const BigTitle = styled.div`
+  color: ${(props) => props.theme.white.lighter};
+  padding: 10px;
+  top: -80px;
+  position: relative;
+  font-size: 46px;
+`;
+
+const Overlay = styled(motion.div)`
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+`;
+
+const BigMovie = styled(motion.div)`
+  position: absolute;
+  width: 40vw;
+  height: 80vh;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: ${(props) => props.theme.black.lighter};
+`;
+
+const BigOverView = styled.p`
+  padding: 20px;
+  color: ${(props) => props.theme.white.lighter};
+  position: relative;
+`;
+
 const offset = 6;
 
 function Home() {
   const bigMovieMatch = useRouteMatch<{ movieId: string }>("/movies/:movieId");
   console.log(bigMovieMatch);
   const history = useHistory();
+  const { scrollY } = useViewportScroll();
   const { isLoading, data } = useQuery<IGetMoviesResult>(
     ["movie", "nowPlaying"],
     getMovies
   );
+  const closeMovie = () => {
+    history.push("/");
+  };
   const Clickmove = (id: number) => {
     history.push(`/movies/${id}`);
   };
-  console.log(data, isLoading);
 
+  const clickMovie =
+    bigMovieMatch?.params.movieId &&
+    data?.results.find(
+      (movie) => String(movie.id) === bigMovieMatch.params.movieId
+    );
+  console.log(clickMovie);
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
   const increaseIndex = () => {
@@ -144,6 +194,7 @@ function Home() {
       setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
     }
   };
+
   const toggleLeaving = () => setLeaving((prev) => !prev);
   return (
     <Wrapper>
@@ -191,19 +242,30 @@ function Home() {
           </Slider>
           <AnimatePresence>
             {bigMovieMatch ? (
-              <motion.div
-                layoutId={bigMovieMatch.params.movieId}
-                style={{
-                  position: "absolute",
-                  width: "40vw",
-                  height: "80vh",
-                  backgroundColor: "red",
-                  top: 50,
-                  left: 0,
-                  right: 0,
-                  margin: "0 auto",
-                }}
-              />
+              <>
+                <Overlay onClick={closeMovie}>
+                  <BigMovie
+                    onClick={() => clickMovie}
+                    style={{ top: scrollY.get() + 100 }}
+                    layoutId={bigMovieMatch.params.movieId}
+                  >
+                    {clickMovie && (
+                      <>
+                        <BigCover
+                          style={{
+                            backgroundImage: `linear-gradient(to top , black , transparent), url(${makeImagePath(
+                              clickMovie.backdrop_path,
+                              "w500"
+                            )})`,
+                          }}
+                        />
+                        <BigTitle>{clickMovie.title}</BigTitle>
+                        <BigOverView>{clickMovie.overview}</BigOverView>
+                      </>
+                    )}
+                  </BigMovie>
+                </Overlay>
+              </>
             ) : null}
           </AnimatePresence>
         </>
