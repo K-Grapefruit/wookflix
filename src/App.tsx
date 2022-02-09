@@ -13,7 +13,7 @@ function App() {
         <Route path="/tv">
           <Tv />
         </Route>
-        <Route path="/search">
+        <Route path={["/search", "/search/detail/:movieId"]}>
           <Search />
         </Route>
         {/*/경로를 제일 뒤로 놓아야 하는 이유 : /는 전체 경로에 포함이기 때문에 먼저 실행되기 때문 */}

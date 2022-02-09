@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { Link, useHistory, useRouteMatch } from "react-router-dom";
+import { Link, useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import { motion, useAnimation, useViewportScroll } from "framer-motion";
 import { useForm } from "react-hook-form";
+import { sendkey } from "../Routes/Search";
 
 const Nav = styled(motion.nav)`
   display: flex;
@@ -117,12 +118,18 @@ interface Iform {
 }
 
 function Header() {
+  const [value, setValue] = useState(sendkey);
   const [searchOpen, setSearchOpen] = useState(false);
+  const searchMatch = useRouteMatch("/search");
   const homeMatch = useRouteMatch("/");
   const tvMatch = useRouteMatch("/tv");
   const inputAnimation = useAnimation();
   const navAnimation = useAnimation();
   const { scrollY } = useViewportScroll();
+
+  console.log("SearchMatch", searchMatch);
+
+  let location = useLocation();
 
   const toggleSearch = () => {
     if (searchOpen) {
@@ -148,6 +155,12 @@ function Header() {
       }
     });
   }, [scrollY, navAnimation]);
+
+  useEffect(() => {
+    setValue(sendkey);
+    console.log("새로고침");
+  }, [sendkey]);
+
   const history = useHistory();
   const { register, handleSubmit } = useForm<Iform>();
   const onValid = (data: Iform) => {
@@ -200,7 +213,11 @@ function Header() {
             ></path>
           </motion.svg>
           <Input
-            {...register("keyword", { required: true, minLength: 2 })}
+            {...register("keyword", {
+              value,
+              required: true,
+              minLength: 2,
+            })}
             animate={inputAnimation}
             initial={{ scaleX: 0 }}
             transition={{ type: "linear" }}
