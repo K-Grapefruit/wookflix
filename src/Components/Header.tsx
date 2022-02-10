@@ -119,6 +119,7 @@ interface Iform {
 
 function Header() {
   const [value, setValue] = useState(sendkey);
+  const [search, setSearch] = useState([]);
   const [searchOpen, setSearchOpen] = useState(false);
   const searchMatch = useRouteMatch("/search");
   const homeMatch = useRouteMatch("/");
@@ -156,16 +157,20 @@ function Header() {
     });
   }, [scrollY, navAnimation]);
 
+  console.log();
   useEffect(() => {
-    setValue(sendkey);
-    console.log("새로고침");
+    setValue(value);
+    localStorage.setItem("search", JSON.stringify(value));
+    setSearch(value as any);
   }, [sendkey]);
-
+  console.log(search);
   const history = useHistory();
   const { register, handleSubmit } = useForm<Iform>();
   const onValid = (data: Iform) => {
     console.log(data);
+
     history.push(`/search?keyword=${data.keyword}`);
+    window.location.reload();
   };
   return (
     <Nav

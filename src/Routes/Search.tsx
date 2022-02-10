@@ -77,6 +77,7 @@ const Overlay = styled(motion.div)`
   top: 0;
   width: 100%;
   height: 100%;
+
   background-color: rgba(0, 0, 0, 0.7);
 `;
 
@@ -126,8 +127,15 @@ const OverlayItemPic = styled.div<{ bgphoto: string }>`
 `;
 const OverlayItemInfo = styled.div`
   width: 100%;
-  background-color: blue;
   height: 50%;
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  p {
+    margin: 20px 0 20px 0;
+  }
 `;
 
 const way = window.location.search;
@@ -140,9 +148,8 @@ function Search() {
   const location = useLocation();
   const history = useHistory();
   const { scrollY } = useViewportScroll();
+
   const keyword = new URLSearchParams(location.search).get("keyword");
-  console.log(bigMovieaMatch);
-  console.log(keyword);
   const { isLoading, data } = useQuery<IGetMoviesSearch>(
     ["search", "movie"],
     () => searchMovie(String(keyword))
@@ -200,9 +207,9 @@ function Search() {
                 bgphoto={makeImagePath(match && match.backdrop_path, "w500")}
               ></OverlayItemPic>
               <OverlayItemInfo>
-                <h1>{match && match.title}</h1>
-                <p>{match && match.overview}</p>
-                <h4>{match && match.popularity}</h4>
+                <h1>Title : {match && match.title}</h1>
+                <p>Description : {match && match.overview}</p>
+                <h4>popularity : {match && match.popularity}</h4>
               </OverlayItemInfo>
             </OverlayItem>
           </Overlay>
