@@ -128,8 +128,6 @@ function Header() {
   const navAnimation = useAnimation();
   const { scrollY } = useViewportScroll();
 
-  console.log("SearchMatch", searchMatch);
-
   let location = useLocation();
 
   const toggleSearch = () => {
