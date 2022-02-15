@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/wookflix/static/js/main.7252b34e.chunk.js",
-    "main.js.map": "/wookflix/static/js/main.7252b34e.chunk.js.map",
+    "main.js": "/wookflix/static/js/main.79fe6c94.chunk.js",
+    "main.js.map": "/wookflix/static/js/main.79fe6c94.chunk.js.map",
     "runtime-main.js": "/wookflix/static/js/runtime-main.932878c9.js",
     "runtime-main.js.map": "/wookflix/static/js/runtime-main.932878c9.js.map",
     "static/js/2.c01c5a37.chunk.js": "/wookflix/static/js/2.c01c5a37.chunk.js",
@@ -12,6 +12,6 @@
   "entrypoints": [
     "static/js/runtime-main.932878c9.js",
     "static/js/2.c01c5a37.chunk.js",
-    "static/js/main.7252b34e.chunk.js"
+    "static/js/main.79fe6c94.chunk.js"
   ]
 }
