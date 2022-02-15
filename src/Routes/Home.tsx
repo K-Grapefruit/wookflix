@@ -171,7 +171,7 @@ function Home() {
     getMovies
   );
   const closeMovie = () => {
-    history.push("/");
+    history.push("/wookflix");
   };
   const Clickmove = (id: number) => {
     history.push(`/movies/${id}`);
