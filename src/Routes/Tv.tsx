@@ -214,7 +214,7 @@ function Tv() {
   };
 
   const goHome = () => {
-    history.push("/");
+    history.push("/wookflix");
   };
 
   const goTv = () => {
@@ -423,8 +423,14 @@ function Tv() {
           <OverlayItem style={{ bottom: "10%" }}>
             <OverlayItemPic
               bgphoto={makeImagePath(tvMatch?.backdrop_path, "w500")}
-            ></OverlayItemPic>
+            >
+              <CloseBtn onClick={goTv}>❌</CloseBtn>
+            </OverlayItemPic>
             <OverlayItemInfo>
+              <Home
+                onClick={goHome}
+                src="https://cdn-icons-png.flaticon.com/512/609/609803.png"
+              ></Home>
               <ItemInfoTitle>TITLE : {tvMatch?.name}</ItemInfoTitle>
               <ItemInfoDesc>
                 STORY:
@@ -475,8 +481,14 @@ function Tv() {
           <OverlayItem style={{ bottom: "10%" }}>
             <OverlayItemPic
               bgphoto={makeImagePath(popMatch?.backdrop_path, "w500")}
-            ></OverlayItemPic>
+            >
+              <CloseBtn onClick={goTv}>❌</CloseBtn>
+            </OverlayItemPic>
             <OverlayItemInfo>
+              <Home
+                onClick={goHome}
+                src="https://cdn-icons-png.flaticon.com/512/609/609803.png"
+              ></Home>
               <ItemInfoTitle>TITLE : {popMatch?.name}</ItemInfoTitle>
               <ItemInfoDesc>
                 STORY:
