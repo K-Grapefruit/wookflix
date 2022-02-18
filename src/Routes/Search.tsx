@@ -216,7 +216,7 @@ function Search() {
     data?.results.find((data) => String(data.id) === bigMovieaMatch.params.id);
 
   const goHome = () => {
-    history.push("/wookflix");
+    history.push("/");
   };
 
   return (

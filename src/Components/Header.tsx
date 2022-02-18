@@ -122,7 +122,7 @@ function Header() {
   const [search, setSearch] = useState([]);
   const [searchOpen, setSearchOpen] = useState(false);
   const searchMatch = useRouteMatch("/search");
-  const homeMatch = useRouteMatch("/wookflix");
+  const homeMatch = useRouteMatch("/");
   const tvMatch = useRouteMatch("/tv");
   const inputAnimation = useAnimation();
   const navAnimation = useAnimation();
@@ -190,7 +190,7 @@ function Header() {
         </Logo>
         <Items>
           <Item>
-            <Link to="/wookflix">Home</Link>
+            <Link to="/">Home</Link>
             {homeMatch?.isExact === true ? <Circle layoutId="circle" /> : null}
           </Item>
           <Item>

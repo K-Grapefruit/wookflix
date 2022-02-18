@@ -213,7 +213,7 @@ function Tv() {
   };
 
   const goHome = () => {
-    history.push("/wookflix");
+    history.push("/");
   };
 
   const goTv = () => {
