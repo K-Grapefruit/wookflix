@@ -122,7 +122,6 @@ const OverlayItemPic = styled.div<{ bgphoto: string }>`
 const OverlayItemInfo = styled.div`
   width: 100%;
   height: 40%;
-
   padding: 10px 50px 10px 50px;
   display: flex;
   flex-direction: column;
