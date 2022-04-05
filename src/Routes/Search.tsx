@@ -185,7 +185,7 @@ const OverlayItemInfo = styled.div`
 const way = window.location.search;
 const key = way.split("=");
 export const sendkey = key.splice(1).toString();
-console.log(sendkey);
+
 function Search() {
   const [clicked, setClicked] = useState(false);
   const bigMovieaMatch = useRouteMatch<{ id: string }>(`/search/detail/:id`);
@@ -199,9 +199,7 @@ function Search() {
   );
 
   const starClick = () => {
-    console.log("클릭");
     setClicked((prev) => !prev);
-    console.log(clicked);
   };
 
   const toggleClick = (id: number) => {
@@ -218,7 +216,7 @@ function Search() {
   const goHome = () => {
     history.push("/");
   };
-
+  console.log(location);
   return (
     <Wrapper>
       {isLoading ? (

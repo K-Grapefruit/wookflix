@@ -177,10 +177,12 @@ function Tv() {
   const [TopLeaving, setTopLeaving] = useState(false);
   const [PopLeaving, setPopLeaving] = useState(false);
   const show = 5;
-  const OnAirRouteMatch = useRouteMatch<{ id: string }>("/tv/onair/:id");
-  const TopRouteMatch = useRouteMatch<{ id: string }>("/tv/top/:id");
-  const PopRouteMatch = useRouteMatch<{ id: string }>("/tv/pop/:id");
+  const OnAirRouteMatch = useRouteMatch<{ id: string }>(`/tv/onair/:id`);
+  const TopRouteMatch = useRouteMatch<{ id: string }>(`/tv/top/:id`);
+  const PopRouteMatch = useRouteMatch<{ id: string }>(`/tv/pop/:id`);
   const history = useHistory();
+  const location = useLocation();
+
   const TvClick = () => {
     if (tvdata) {
       if (tvLeaving) return;
@@ -229,13 +231,13 @@ function Tv() {
     setPopLeaving((prev) => !prev);
   };
 
-  const tvDetail = (id: string) => {
+  const tvDetail = (id: number) => {
     history.push(`/tv/onair/${id}`);
   };
-  const topDetail = (id: string) => {
+  const topDetail = (id: number) => {
     history.push(`/tv/top/${id}`);
   };
-  const popDetail = (id: string) => {
+  const popDetail = (id: number) => {
     history.push(`/tv/pop/${id}`);
   };
 
@@ -276,20 +278,25 @@ function Tv() {
     },
   };
 
-  const tvMatch = tvdata?.results.find(
-    (data) => data.id + "" === OnAirRouteMatch?.params.id
-  );
+  const tvMatch =
+    OnAirRouteMatch?.params.id &&
+    tvdata?.results.find(
+      (data) => String(data.id) === OnAirRouteMatch?.params.id
+    );
 
-  const topMatch = topratedata?.results.find(
-    (data) => data.id + "" === TopRouteMatch?.params.id
-  );
+  const topMatch =
+    TopRouteMatch?.params.id &&
+    topratedata?.results.find(
+      (data) => String(data.id) === TopRouteMatch?.params.id
+    );
 
-  const popMatch = populatedata?.results.find(
-    (data) => data.id + "" === PopRouteMatch?.params.id
-  );
+  const popMatch =
+    PopRouteMatch?.params.id &&
+    populatedata?.results.find(
+      (data) => String(data.id) === PopRouteMatch?.params.id
+    );
 
-  console.log(tvMatch);
-
+  console.log(location);
   return (
     <Wrapper>
       {tvloading ? (
@@ -308,7 +315,7 @@ function Tv() {
               .slice(show * Tvindex, show * Tvindex + show)
               .map((item) => (
                 <Tvitem
-                  onClick={() => tvDetail(item.id + "")}
+                  onClick={() => tvDetail(item.id)}
                   variants={ItemVariants}
                   initial="normal"
                   whileHover="hover"
@@ -349,7 +356,7 @@ function Tv() {
               .slice(show * Topindex, show * Topindex + show)
               .map((item) => (
                 <Topitem
-                  onClick={() => topDetail(item.id + "")}
+                  onClick={() => topDetail(item.id)}
                   variants={ItemVariants}
                   initial="normal"
                   whileHover="hover"
@@ -390,7 +397,7 @@ function Tv() {
               .slice(show * Populateindex, show * Populateindex + show)
               .map((item) => (
                 <Popitem
-                  onClick={() => popDetail(item.id + "")}
+                  onClick={() => popDetail(item.id)}
                   variants={ItemVariants}
                   initial="normal"
                   whileHover="hover"
@@ -421,7 +428,7 @@ function Tv() {
         <Overlay>
           <OverlayItem style={{ bottom: "10%" }}>
             <OverlayItemPic
-              bgphoto={makeImagePath(tvMatch?.backdrop_path, "w500")}
+              bgphoto={makeImagePath(tvMatch && tvMatch.backdrop_path, "w500")}
             >
               <CloseBtn onClick={goTv}>❌</CloseBtn>
             </OverlayItemPic>
@@ -430,17 +437,17 @@ function Tv() {
                 onClick={goHome}
                 src="https://cdn-icons-png.flaticon.com/512/609/609803.png"
               ></Home>
-              <ItemInfoTitle>TITLE : {tvMatch?.name}</ItemInfoTitle>
+              <ItemInfoTitle>TITLE : {tvMatch && tvMatch?.name}</ItemInfoTitle>
               <ItemInfoDesc>
                 STORY:
                 <br />
-                {tvMatch?.overview}
+                {tvMatch && tvMatch?.overview}
               </ItemInfoDesc>
               <ItemInfoPopularity>
                 POPULARITY
                 <br />
                 <br />
-                {tvMatch?.popularity} SCORE
+                {tvMatch && tvMatch?.popularity} SCORE
               </ItemInfoPopularity>
             </OverlayItemInfo>
           </OverlayItem>
@@ -450,7 +457,10 @@ function Tv() {
         <Overlay>
           <OverlayItem style={{ bottom: "10%" }}>
             <OverlayItemPic
-              bgphoto={makeImagePath(topMatch?.backdrop_path, "w500")}
+              bgphoto={makeImagePath(
+                topMatch && topMatch?.backdrop_path,
+                "w500"
+              )}
             >
               <CloseBtn onClick={goTv}>❌</CloseBtn>
             </OverlayItemPic>
@@ -459,17 +469,19 @@ function Tv() {
                 onClick={goHome}
                 src="https://cdn-icons-png.flaticon.com/512/609/609803.png"
               ></Home>
-              <ItemInfoTitle>TITLE : {topMatch?.name}</ItemInfoTitle>
+              <ItemInfoTitle>
+                TITLE : {topMatch && topMatch?.name}
+              </ItemInfoTitle>
               <ItemInfoDesc>
                 STORY:
                 <br />
-                {topMatch?.overview}
+                {topMatch && topMatch?.overview}
               </ItemInfoDesc>
               <ItemInfoPopularity>
                 POPULARITY
                 <br />
                 <br />
-                {topMatch?.popularity} SCORE
+                {topMatch && topMatch?.popularity} SCORE
               </ItemInfoPopularity>
             </OverlayItemInfo>
           </OverlayItem>
@@ -479,7 +491,10 @@ function Tv() {
         <Overlay>
           <OverlayItem style={{ bottom: "10%" }}>
             <OverlayItemPic
-              bgphoto={makeImagePath(popMatch?.backdrop_path, "w500")}
+              bgphoto={makeImagePath(
+                popMatch && popMatch?.backdrop_path,
+                "w500"
+              )}
             >
               <CloseBtn onClick={goTv}>❌</CloseBtn>
             </OverlayItemPic>
@@ -488,17 +503,19 @@ function Tv() {
                 onClick={goHome}
                 src="https://cdn-icons-png.flaticon.com/512/609/609803.png"
               ></Home>
-              <ItemInfoTitle>TITLE : {popMatch?.name}</ItemInfoTitle>
+              <ItemInfoTitle>
+                TITLE : {popMatch && popMatch?.name}
+              </ItemInfoTitle>
               <ItemInfoDesc>
                 STORY:
                 <br />
-                {popMatch?.overview}
+                {popMatch && popMatch?.overview}
               </ItemInfoDesc>
               <ItemInfoPopularity>
                 POPULARITY
                 <br />
                 <br />
-                {popMatch?.popularity} SCORE
+                {popMatch && popMatch?.popularity} SCORE
               </ItemInfoPopularity>
             </OverlayItemInfo>
           </OverlayItem>

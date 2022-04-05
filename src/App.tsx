@@ -11,7 +11,11 @@ function App() {
     <Router>
       <Header />
       <Switch>
-        <Route exact path="/tv" component={Tv}></Route>
+        <Route
+          exact
+          path={["/tv", "/tv/onair/:id , /tv/top/:id", "/tv/pop/:id"]}
+          component={Tv}
+        ></Route>
         <Route
           exact
           path={["/search", "/search/detail/:movieId"]}
