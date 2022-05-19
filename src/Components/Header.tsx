@@ -170,6 +170,7 @@ function Header() {
     history.push(`/search?keyword=${data.keyword}`);
     window.location.reload();
   };
+  console.log(location);
   return (
     <Nav
       variants={scrollVariants}
